@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logic Model Builder - Vision Shift Catalyst</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <h1>Logic Model Builder</h1>
+        <h2>Brought to you by <strong>Vision Shift Catalyst</strong></h2>
+        <p>Build a logic model that connects your program’s inputs, activities, and outcomes—with clarity, intention, and measurable impact.</p>
+    </header>
+    <section class="meta">
+        <input type="text" id="programName" placeholder="Program Name" />
+        <input type="text" id="userName" placeholder="Your Name" />
+        <input type="date" id="date" />
+    </section>
+    <section id="builder">
+        <div class="column" id="inputs"><h3>Inputs</h3></div>
+        <div class="column" id="activities"><h3>Activities</h3></div>
+        <div class="column" id="outputs"><h3>Outputs</h3></div>
+        <div class="column" id="shortTerm"><h3>Short-Term Outcomes</h3></div>
+        <div class="column" id="mediumTerm"><h3>Medium-Term Outcomes</h3></div>
+        <div class="column" id="longTerm"><h3>Long-Term Outcomes</h3></div>
+    </section>
+    <section class="controls">
+        <input type="text" id="itemInput" placeholder="Enter item" />
+        <select id="category">
+            <option value="inputs">Inputs</option>
+            <option value="activities">Activities</option>
+            <option value="outputs">Outputs</option>
+            <option value="shortTerm">Short-Term Outcomes</option>
+            <option value="mediumTerm">Medium-Term Outcomes</option>
+            <option value="longTerm">Long-Term Outcomes</option>
+        </select>
+        <button onclick="addItem()">Add</button>
+        <button onclick="clearAll()">Clear</button>
+        <button onclick="downloadExcel()">Excel</button>
+        <button onclick="downloadPDF()">PDF</button>
+        <button onclick="downloadImage()">Image</button>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>
