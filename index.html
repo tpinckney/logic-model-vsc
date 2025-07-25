@@ -9,7 +9,7 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             background-color: #f8f9fa;
-            color: #212529;
+            color: #000000;
             font-size: 16px;
         }
         header {
@@ -19,17 +19,17 @@
             border-bottom: 2px solid #dee2e6;
         }
         header h1 {
-            color: #495057;
+            color: #000000;
             margin-bottom: 10px;
             font-size: 2.5em;
         }
         header h2 {
-            color: #6c757d;
+            color: #000000;
             margin-bottom: 15px;
             font-weight: normal;
         }
         header p {
-            color: #6c757d;
+            color: #000000;
             font-size: 1.1em;
             line-height: 1.5;
         }
@@ -46,16 +46,18 @@
             border-radius: 8px;
             font-size: 16px;
             background-color: #ffffff;
-            color: #495057;
+            color: #000000;
             min-width: 150px;
         }
         #builder {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             padding: 20px;
             gap: 15px;
             overflow-x: auto;
             min-height: 400px;
+            width: 100%;
+            box-sizing: border-box;
         }
         .column {
             background-color: #ffffff;
@@ -63,18 +65,20 @@
             border-radius: 12px;
             padding: 20px;
             flex: 1;
-            min-width: 200px;
+            min-width: 180px;
+            max-width: 220px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .column h3 {
             text-align: center;
-            color: #495057;
+            color: #000000;
             margin-top: 0;
             margin-bottom: 20px;
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-weight: bold;
             border-bottom: 2px solid #e9ecef;
             padding-bottom: 10px;
+            line-height: 1.3;
         }
         .box {
             background-color: #f8f9fa;
@@ -85,7 +89,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #495057;
+            color: #000000;
             font-size: 15px;
             line-height: 1.4;
         }
@@ -123,7 +127,7 @@
         }
         .controls input, .controls select {
             background-color: #ffffff;
-            color: #495057;
+            color: #000000;
         }
         .controls button {
             background-color: #007bff;
@@ -250,40 +254,53 @@
             const date = document.getElementById("date").value || new Date().toLocaleDateString();
             
             // Set up PDF
-            pdf.setFontSize(20);
+            pdf.setFontSize(18);
             pdf.text(programName, 20, 20);
             
-            pdf.setFontSize(12);
-            if (userName) pdf.text(`Created by: ${userName}`, 20, 30);
-            pdf.text(`Date: ${date}`, 20, 35);
+            pdf.setFontSize(11);
+            let headerY = 30;
+            if (userName) {
+                pdf.text(`Created by: ${userName}`, 20, headerY);
+                headerY += 6;
+            }
+            pdf.text(`Date: ${date}`, 20, headerY);
             
             // Add logic model content
             const columns = ["inputs", "activities", "outputs", "shortTerm", "mediumTerm", "longTerm"];
             const columnTitles = ["Inputs", "Activities", "Outputs", "Short-Term Outcomes", "Medium-Term Outcomes", "Long-Term Outcomes"];
             
-            let yPosition = 50;
-            const columnWidth = 45;
+            let startY = headerY + 15;
+            const columnWidth = 42;
+            const pageWidth = 297; // A4 landscape width
+            const startX = 15;
             
             columns.forEach((columnId, index) => {
-                const xPosition = 20 + (index * columnWidth);
+                const xPosition = startX + (index * columnWidth);
                 
                 // Column title
-                pdf.setFontSize(14);
+                pdf.setFontSize(12);
                 pdf.setFont(undefined, 'bold');
-                pdf.text(columnTitles[index], xPosition, yPosition);
+                
+                // Split long titles into multiple lines
+                const titleLines = pdf.splitTextToSize(columnTitles[index], columnWidth - 2);
+                let titleY = startY;
+                titleLines.forEach(line => {
+                    pdf.text(line, xPosition, titleY);
+                    titleY += 5;
+                });
                 
                 // Column items
-                pdf.setFontSize(10);
+                pdf.setFontSize(9);
                 pdf.setFont(undefined, 'normal');
                 const column = document.getElementById(columnId);
                 const boxes = column.querySelectorAll('.box span');
                 
-                let itemY = yPosition + 10;
+                let itemY = titleY + 5;
                 boxes.forEach(box => {
                     const text = box.textContent;
-                    const lines = pdf.splitTextToSize(text, columnWidth - 5);
+                    const lines = pdf.splitTextToSize(text, columnWidth - 2);
                     pdf.text(lines, xPosition, itemY);
-                    itemY += lines.length * 5;
+                    itemY += lines.length * 4 + 2;
                 });
             });
             
