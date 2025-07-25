@@ -158,13 +158,111 @@
             background-color: #c82333 !important;
             border-color: #c82333 !important;
         }
+        /* Tablet styles */
         @media (max-width: 1200px) {
             #builder {
                 flex-wrap: wrap;
+                justify-content: center;
             }
             .column {
-                min-width: 300px;
+                min-width: 280px;
+                max-width: 300px;
                 margin-bottom: 20px;
+            }
+        }
+        
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 15px;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            header h2 {
+                font-size: 1.2em;
+            }
+            header p {
+                font-size: 1em;
+            }
+            
+            .meta {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin: 15px;
+            }
+            .meta input {
+                width: 100%;
+                max-width: 300px;
+                min-width: auto;
+            }
+            
+            #builder {
+                flex-direction: column;
+                align-items: center;
+                padding: 15px;
+                gap: 20px;
+            }
+            .column {
+                width: 100%;
+                max-width: 350px;
+                min-width: auto;
+                margin-bottom: 15px;
+            }
+            .column h3 {
+                font-size: 1.2em;
+            }
+            
+            .controls {
+                margin: 20px 15px;
+            }
+            .add-controls {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .controls input, .controls select, .controls button {
+                width: 100%;
+                max-width: 300px;
+                margin: 5px 0;
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+            
+            .export-controls {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .export-controls button {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+        
+        /* Small mobile styles */
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 10px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            #builder {
+                padding: 10px;
+            }
+            .column {
+                padding: 15px;
+            }
+            .column h3 {
+                font-size: 1.1em;
+            }
+            .box {
+                font-size: 14px;
+                padding: 10px 12px;
             }
         }
     </style>
